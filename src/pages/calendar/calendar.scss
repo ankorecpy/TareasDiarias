@@ -18,11 +18,15 @@ page-calendar {
         color: #fff;
     }
     .monthName {
+        position: relative;
         float: left;
         width: 80%;
     }
+    .yearTitle {
+        text-align: center;
+    }
     .monthProgress {
-        float: left;
+        float: right;
     }
     .days {
         width: 100%;

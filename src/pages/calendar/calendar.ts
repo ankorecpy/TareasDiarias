@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { TasksListPage } from '../tasks-list/tasks-list';
 
 @Component({
   selector: 'page-calendar',
@@ -10,16 +11,18 @@ export class CalendarPage {
   private calendar: Array<number[]>;
   private month: number;
   private year: number;
+  private monthName: String;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.calendar = new Array<number[]>();
   }
 
   ionViewWillEnter() {
-    let date: Date = new Date(); 
+    let date: Date = new Date();
     this.month = date.getMonth() + 1;
     this.year = date.getFullYear();
     this.calendar = this.calculateCalendar(this.getInitialDayMonth(this.month, this.year), this.getNumberDaysMonth(this.month, this.year));
+    this.calculateNameOfMonth(this.month);
   }
 
   //get index of fist day of year, index between 0 and 6
@@ -63,7 +66,7 @@ export class CalendarPage {
   private calculateCalendar(indexFirstDayMonth: number, numberDays: number): Array<number[]> {
     var result: Array<number[]> = new Array<number[]>();
     var startIndex: number = indexFirstDayMonth, dayCounter: number = 1;
-    for (var  row = 0; row < 6; row++) {
+    for (var row = 0; row < 6; row++) {
       let weekCol: number[] = [0, 0, 0, 0, 0, 0, 0];
       for (var day = startIndex; day < 7 && dayCounter <= numberDays; day++) {
         weekCol[day] = dayCounter;
@@ -73,6 +76,45 @@ export class CalendarPage {
       startIndex = 0;
     }
     return result;
+  }
+
+  //get name of a specific month
+  private calculateNameOfMonth(month: number): void {
+    let result: String = "";
+    if (month >= 1 && month <= 12) {
+      let nameMonthsCol: String[] = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+      result = nameMonthsCol[month - 1];
+    }
+    this.monthName = result;
+  }
+
+  //open taskList page and send datas like day, month and selected year
+  private goToTaskList(day: number): void {
+    this.navCtrl.push(TasksListPage, { day: day, month: this.month, year: this.year });
+  }
+
+  //calculate datas of next month of this year, or first month of next year
+  private calculateNextMonth(): void {
+    if (this.month == 12) {
+      this.month = 1;
+      this.year++;
+    } else {
+      this.month++;
+    }
+    this.calendar = this.calculateCalendar(this.getInitialDayMonth(this.month, this.year), this.getNumberDaysMonth(this.month, this.year));
+    this.calculateNameOfMonth(this.month);
+  }
+
+  //calculate datas of previous month of this year, or last month of previous year
+  private calculatePreviousMonth(): void {
+    if (this.month == 1) {
+      this.month = 12;
+      this.year--;
+    } else {
+      this.month--;
+    }
+    this.calendar = this.calculateCalendar(this.getInitialDayMonth(this.month, this.year), this.getNumberDaysMonth(this.month, this.year));
+    this.calculateNameOfMonth(this.month);
   }
 
 }

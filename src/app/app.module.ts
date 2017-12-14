@@ -8,12 +8,14 @@ import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
 import { CalendarPage } from '../pages/calendar/calendar';
+import { TasksListPage } from '../pages/tasks-list/tasks-list';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    CalendarPage
+    CalendarPage,
+    TasksListPage
   ],
   imports: [
     BrowserModule,
@@ -23,7 +25,8 @@ import { CalendarPage } from '../pages/calendar/calendar';
   entryComponents: [
     MyApp,
     HomePage,
-    CalendarPage
+    CalendarPage,
+    TasksListPage
   ],
   providers: [
     StatusBar,

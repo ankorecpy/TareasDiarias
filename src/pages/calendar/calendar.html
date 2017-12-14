@@ -9,6 +9,21 @@
   <ion-navbar color="primary">
     <ion-title>Tareas Diarias</ion-title>
   </ion-navbar>
+  <ion-navbar color="primary">
+    <ion-buttons left>
+      <button ion-button icon-only (click)="calculatePreviousMonth()">
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <div class="yearTitle">
+      <ion-title>{{this.year}}</ion-title>
+    </div>
+    <ion-buttons right>
+      <button ion-button icon-only (click)="calculateNextMonth()">
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 
 </ion-header>
 
@@ -16,7 +31,7 @@
   <div class="month">
     <div class="monthHeader">
       <div class="monthName">
-        <h2>Septiembre</h2>
+        <h2>{{this.monthName}}</h2>
       </div>
       <div class="monthProgress">
         <p>prog.%</p>
@@ -35,7 +50,7 @@
         </tr>
         <tr *ngFor="let week of this.calendar">
           <th *ngFor="let day of week">
-            <button class="buttonDay" *ngIf="day != 0">{{day}}</button>
+            <button class="buttonDay" (click)="goToTaskList(day)" *ngIf="day != 0">{{day}}</button>
             <button class="buttonEmpty" *ngIf="day == 0"></button>
           </th>
         </tr>
