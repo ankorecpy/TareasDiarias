@@ -30,7 +30,7 @@ export class TasksListPage implements Observer {
     this.creationPermission = this.navParams.get('creationPermission');
   }
 
-  private goToCreeateTask(): void {
+  private goToCreateTask(): void {
     this.navCtrl.push(TaskPage, { name: "", progress: "0", difficulty: 1, note: "", mode: true });
   }
 
