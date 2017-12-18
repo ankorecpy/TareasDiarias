@@ -9,8 +9,10 @@ import { TaskDao } from './dataBase/task-dao';
 export class FactoryDay implements Factory {
 
     private date: Date;
+    private dayDao: DayDao;
+    private taskDao: TaskDao;
 
-    constructor(public dayDao: DayDao, public taskDao: TaskDao) { }
+    constructor() { }
 
     public setDate(newDate: Date): void {
         this.date = newDate;
