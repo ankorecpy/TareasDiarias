@@ -1,6 +1,6 @@
 import { Day } from './models/day';
 
-export class OperativeDay extends Day{
+export class OperativeDay extends Day {
 
     private totalProgress: number;
 

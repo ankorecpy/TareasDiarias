@@ -9,13 +9,15 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { CalendarPage } from '../pages/calendar/calendar';
 import { TasksListPage } from '../pages/tasks-list/tasks-list';
+import { TaskPage } from '../pages/task/task';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     CalendarPage,
-    TasksListPage
+    TasksListPage,
+    TaskPage
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,8 @@ import { TasksListPage } from '../pages/tasks-list/tasks-list';
     MyApp,
     HomePage,
     CalendarPage,
-    TasksListPage
+    TasksListPage,
+    TaskPage
   ],
   providers: [
     StatusBar,

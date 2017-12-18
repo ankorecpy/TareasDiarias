@@ -88,18 +88,23 @@ export class CalendarPage {
     this.monthName = result;
   }
 
-  //open taskList page and send datas like day, month and selected year
+  //open taskList page and send datas like day, month and selected year, too send a flag of creation
   private goToTaskList(day: number): void {
-    this.navCtrl.push(TasksListPage, { day: day, month: this.month, year: this.year });
+    var todayDate: Date = new Date();
+    let creationPermission: boolean = this.year > todayDate.getFullYear();
+    let currentMonth: number = todayDate.getMonth() + 1;
+    if (!creationPermission && (this.year == todayDate.getFullYear() && this.month >= currentMonth)) {
+      creationPermission = this.month > currentMonth ? true : day >= todayDate.getDate();
+    }
+    this.navCtrl.push(TasksListPage, { day: day, month: this.month, year: this.year, monthName: this.monthName, creationPermission: creationPermission });
   }
 
   //calculate datas of next month of this year, or first month of next year
   private calculateNextMonth(): void {
-    if (this.month == 12) {
+    this.month++;
+    if (this.month == 13) {
       this.month = 1;
       this.year++;
-    } else {
-      this.month++;
     }
     this.calendar = this.calculateCalendar(this.getInitialDayMonth(this.month, this.year), this.getNumberDaysMonth(this.month, this.year));
     this.calculateNameOfMonth(this.month);
@@ -107,11 +112,10 @@ export class CalendarPage {
 
   //calculate datas of previous month of this year, or last month of previous year
   private calculatePreviousMonth(): void {
-    if (this.month == 1) {
+    this.month--;
+    if (this.month == 0) {
       this.month = 12;
       this.year--;
-    } else {
-      this.month--;
     }
     this.calendar = this.calculateCalendar(this.getInitialDayMonth(this.month, this.year), this.getNumberDaysMonth(this.month, this.year));
     this.calculateNameOfMonth(this.month);

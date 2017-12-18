@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Tarea</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="base">
+    <ion-item>
+      <ion-label floating>Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]="this.name" maxlength="50"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Nivel Dificultad</ion-label>
+      <ion-input type="number" min='1' max='10' [(ngModel)]="this.difficultyLevel"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Nota</ion-label>
+      <ion-input type="text" [(ngModel)]="this.note" maxlength="60"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Progreso</ion-label>
+      <ion-range [(ngModel)]="this.progress" pin="true" min="0" max="100">
+      </ion-range>
+    </ion-item>
+    <ion-fab right bottom>
+      <button ion-fab><ion-icon name="md-checkmark"></ion-icon></button>
+    </ion-fab>
+  </div>
+
+</ion-content>

@@ -20,5 +20,9 @@ export abstract class Day {
         //TODO
         alert("don't forget implement removeTask method (Day)");
     }
+
+    public setTasksList(newTasksList: Array<Task>): void {
+        this.taskList = newTasksList;
+    }
     
 }

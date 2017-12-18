@@ -1,18 +1,24 @@
-<!--
-  Generated template for the TasksListPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>Taeras pendientes</ion-title>
+    <ion-title>{{this.monthName}} {{this.day}} de {{this.year}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <div class="lists">
+    <ion-list>
+      <ion-list-header>
+        <ion-item>Tareas pendientes</ion-item>
+      </ion-list-header>
+      
+    </ion-list>
+    <ion-fab right bottom>
+      <button ion-fab (click)="goToCreateTask()" *ngIf="this.creationPermission"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+  </div>
+  <div class="finalSpace"></div>
 
 </ion-content>
