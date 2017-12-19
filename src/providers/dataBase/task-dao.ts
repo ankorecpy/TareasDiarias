@@ -14,27 +14,35 @@ export class TaskDao extends Observable {
     }
 
     public createTable() {
-        let statement = "CREATE TABLE IF NOT EXISTS Task(Tas_Id INTEGER PRIMARY KEY AUTOINCREMENT, Tas_Name NVARCHAR(50), Tas_Progress INTEGER, Tas_Note NVARCHAR(60), Tas_Difficulty INTEGER, Tas_Date TEXT)";
+        let statement = "CREATE TABLE IF NOT EXISTS Task(Tas_Id INTEGER PRIMARY KEY AUTOINCREMENT, Tas_Name NVARCHAR(50) NOT NULL, Tas_Progress INTEGER NOT NULL, Tas_Note NVARCHAR(60) NOT NULL, Tas_Difficulty INTEGER NOT NULL, Tas_Date TEXT NOT NULL)";
         return this.dataBase.executeSql(statement, []);
     }
 
-    public add(name: String, progress: number, note: String, difficulty: number, date: Date): boolean {
-        let result: boolean = false;
+    public add(name: String, progress: number, note: String, difficulty: number, date: Date): Promise<any> {
         let statement = "INSERT INTO Task(Tas_Name, Tas_Progress, Tas_Note, Tas_Difficulty, Tas_Date) VALUES (?, ?, ?, ?)";
-        //return this.dataBase.executeSql(statement, [name, progress, note, difficulty, date]);
-        return result;
+        return this.dataBase.executeSql(statement, [name, progress, note, difficulty, (date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDay())]).then(() => {            
+            return Promise.resolve(true);
+        }).catch((error) => {
+            Promise.reject(error);
+        });
     }
 
-    public modify(id: number, name: String, progress: number, note: String, difficulty: number): boolean {
-        let result: boolean = false;
-        
-        return result;
+    public modify(id: number, name: String, progress: number, note: String, difficulty: number): Promise<any> {
+        let statement = "UPDATE Task set Tas_Name = ?, Tas_Progress = ?, Tas_Note = ?, Tas_Difficulty = ? WHERE Tas_Id = ?";
+        return this.dataBase.executeSql(statement, [name, progress, note, difficulty, id]).then(() => {
+            return Promise.resolve(true);
+        }).catch((error) => {
+            Promise.reject(error);
+        });
     }
 
-    public delete(id: number): boolean {
-        let result: boolean = false;
-        
-        return result;
+    public delete(id: number): Promise<any> {
+        let statement = "DELETE FROM Task WHERE Tas_Id = ?";
+        return this.dataBase.executeSql(statement, [id]).then(() => {
+            return Promise.resolve(true);
+        }).catch((error) => {
+            Promise.reject(error);
+        });
     }
 
     public getTasksList(date: Date): Array<DailyTask> {

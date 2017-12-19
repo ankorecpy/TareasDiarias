@@ -7,18 +7,20 @@ export class Controller {
 
     private constructor() { }
 
-    private static getInstance(): Controller {
+    public static getInstance(): Controller {
         if (Controller.instance == null) {
             Controller.instance = Controller.constructor();
         }
         return Controller.instance;
     }
 
-    public createTask(name: String, progress: number, note: String, difficulty: number, date: Date): boolean {
-        let result: boolean = false;
+    public createTask(name: String, progress: number, note: String, difficulty: number, date: Date): Promise<boolean> {
         let taskDao: TaskDao = new TaskDao();
-        taskDao.add(name, progress, note, difficulty, date);
-        return result;
+        return taskDao.add(name, progress, note, difficulty, date).then(() => {
+            return Promise.resolve(true);
+        }).catch(() => {
+           return Promise.resolve(false); 
+        });
     }
 
     public modifyTask(id: number, name: String, progress: number, note: String, difficulty: number): boolean {
